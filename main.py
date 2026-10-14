@@ -106,12 +106,14 @@ def main():
     # Registra il comando /stats
     app.add_handler(CommandHandler("stats", stats_command))
     
-    # Configura il Job Queue per controllare i nuovi video ogni 10 minuti (600 secondi)
+    # Configura il Job Queue per controllare i nuovi video ogni 10 minuti
     job_queue = app.job_queue
     job_queue.run_repeating(check_new_videos, interval=600, first=10)
     
     print("Bot avviato e in ascolto per statistiche e nuovi video...")
-    app.run_polling()
+    
+    # Forza il polling a ricevere messaggi dai gruppi e comandi
+    app.run_polling(allowed_updates=["message", "edited_message", "channel_post"])
 
 if __name__ == "__main__":
     # Avvia il server HTTP fittizio in background per Render
