@@ -1,4 +1,6 @@
 import os
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import threading
 import asyncio
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
