@@ -11,7 +11,6 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-# Token aggiornato
 TELEGRAM_BOT_TOKEN = "8914103258:AAEfe20telSqoAcJTJFqPjxpI7hBq-D3SzQ"
 CHANNEL_ID = "UCNDXC4L8bA_X4vEh9_cJBqg"
 
@@ -50,7 +49,8 @@ async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         message = "Impossibile recuperare i dati del canale al momento."
         
-    await update.message.reply_text(message, parse_mongo="Markdown" if False else "Markdown")
+    # Corretto parse_mode qui sotto
+    await update.message.reply_text(message, parse_mode="Markdown")
 
 async def log_all_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message and update.message.text:
