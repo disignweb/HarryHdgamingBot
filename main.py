@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 import feedparser  # Libreria per leggere i feed RSS di YouTube
 
 # Configurazioni
-TELEGRAM_BOT_TOKEN = "8914103258:AAFPXSkrMv0wc93GvA-4UYYj6U8j3t7ON6I"
+TELEGRAM_BOT_TOKEN = "8914103258:AAGNhhu9FOjqcHpD0yalZMzHlutKZpkMBHw"
 YOUTUBE_API_KEY = "AIzaSyB_8mhAshv1fadfwuhs0D6GwDk8BhTfUrg"
 CHANNEL_ID = "UCNDXC4L8bA_X4vEh9_cJBqg"
 TELEGRAM_CHAT_ID = "-5382886391"  # L'ID della chat o del gruppo dove mandare la notifica
