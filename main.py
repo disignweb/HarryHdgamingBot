@@ -86,6 +86,18 @@ async def check_new_videos(context: ContextTypes.DEFAULT_TYPE):
                 text=message,
                 parse_mode="Markdown"
             )
+# Un piccolo server HTTP fittizio per soddisfare il controllo delle porte di Render
+class SimpleHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"Bot is alive and running!")
+
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(("0.0.0.0", port), SimpleHandler)
+    server.serve_forever()
 
 def main():
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
@@ -102,3 +114,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Avvia il server HTTP fittizio in background per Render
+    server_thread = threading.Thread(target=run_dummy_server, daemon=True)
+    server_thread.start()
+    print("Server web fittizio avviato per Render sulla porta:", os.environ.get("PORT", 10000))
