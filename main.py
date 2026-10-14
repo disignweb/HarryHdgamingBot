@@ -1,15 +1,16 @@
+Python
 import os
 import threading
+import logging
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import feedparser
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 
 # Abilita i log dettagliati
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
-)
 
 # --- CONFIGURAZIONE ---
 # Metti qui dentro il token corretto che ti ha dato BotFather
