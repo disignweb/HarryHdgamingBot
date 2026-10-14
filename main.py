@@ -5,6 +5,12 @@ import feedparser
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
+# Abilita i log dettagliati
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
 # --- CONFIGURAZIONE ---
 # Metti qui dentro il token corretto che ti ha dato BotFather
 TELEGRAM_BOT_TOKEN = "8914103258:AAEfe20telSqoAcJTJFqPjxpI7hBq-D3SzQ"
@@ -26,8 +32,9 @@ def run_dummy_server():
     server = HTTPServer(("0.0.0.0", port), SimpleHTTPRequestHandler)
     server.serve_forever()
 
-# --- FUNZIONE STATS CON FEED RSS (ZERO QUOTA GOOGLE) ---
+# --- HANDLER DEL COMANDO /STATS (VIA RSS - ZERO QUOTE) ---
 async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print(">>> RICEVUTO COMANDO /stats! <<<")
     feed_url = f"https://www.youtube.com/feeds/videos.xml?channel_id={CHANNEL_ID}"
     feed = feedparser.parse(feed_url)
     
@@ -48,17 +55,25 @@ async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
     await update.message.reply_text(message, parse_mode="Markdown")
 
+# --- DEBUG: LOGGA I MESSAGGI NEL GRUPPO ---
+async def log_all_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message and update.message.text:
+        print(f">>> MESSAGGIO RICEVUTO: {update.message.text} <<<")
+
 # --- MAIN ---
 def main():
-    # Avvia il server HTTP per Render in un thread separato
+    # Avvia il server HTTP per Render in background
     threading.Thread(target=run_dummy_server, daemon=True).start()
     
-    # Avvia il bot Telegram
+    # Inizializza il bot Telegram
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
+    
+    # Registra i comandi e gli handler
     app.add_handler(CommandHandler("stats", stats_command))
+    app.add_handler(MessageHandler(filters.TEXT & (~filters.COMMAND), log_all_messages))
     
     print("Bot avviato con successo e libero da quote API!")
-    app.run_polling(allowed_updates=["message", "edited_message", "channel_post"])
+    app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
     main()
