@@ -11,7 +11,7 @@ import feedparser  # Libreria per leggere i feed RSS di YouTube
 TELEGRAM_BOT_TOKEN = "8914103258:AAFPXSkrMv0wc93GvA-4UYYj6U8j3t7ON6I"
 YOUTUBE_API_KEY = "AIzaSyB_8mhAshv1fadfwuhs0D6GwDk8BhTfUrg"
 CHANNEL_ID = "UCNDXC4L8bA_X4vEh9_cJBqg"
-TELEGRAM_CHAT_ID = "-5382886391" # L'ID della chat o del gruppo dove mandare la notifica
+TELEGRAM_CHAT_ID = "-5382886391"  # L'ID della chat o del gruppo dove mandare la notifica
 
 # Variabile per memorizzare l'ultimo video notificato
 last_video_id = None
@@ -86,6 +86,7 @@ async def check_new_videos(context: ContextTypes.DEFAULT_TYPE):
                 text=message,
                 parse_mode="Markdown"
             )
+
 # Un piccolo server HTTP fittizio per soddisfare il controllo delle porte di Render
 class SimpleHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -113,8 +114,10 @@ def main():
     app.run_polling()
 
 if __name__ == "__main__":
-    main()
-# Avvia il server HTTP fittizio in background per Render
+    # Avvia il server HTTP fittizio in background per Render
     server_thread = threading.Thread(target=run_dummy_server, daemon=True)
     server_thread.start()
     print("Server web fittizio avviato per Render sulla porta:", os.environ.get("PORT", 10000))
+
+    # Avvia il bot Telegram
+    main()
