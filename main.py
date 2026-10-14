@@ -6,7 +6,8 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 # --- CONFIGURAZIONE ---
-TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "8914103258:AAFPXSkrMv0wc93GvA-4UYYj6U8j3t7ON6I")
+# Metti qui dentro il token corretto che ti ha dato BotFather
+TELEGRAM_BOT_TOKEN = "8914103258:AAEfe20telSqoAcJTJFqPjxpI7hBq-D3SzQ"
 CHANNEL_ID = "UCNDXC4L8bA_X4vEh9_cJBqg"
 
 # --- SERVER FITTIZIO PER RENDER ---
